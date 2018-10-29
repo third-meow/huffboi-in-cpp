@@ -1,9 +1,15 @@
-#include<bits/stdc++.h>
-#include<vector>
+#include <bits/stdc++.h>
+#include <vector>
 #include "huffnode.cpp"
 
 using namespace std;
 
+struct sort_nodes_key {
+    inline bool operator() (const Node* n1, const Node* n2)
+    {
+        return (n1->freq > n2->freq);
+    }
+};
 
 int main(int argc, char* argv[]){
 	//get message for encoding
@@ -37,13 +43,36 @@ int main(int argc, char* argv[]){
 		}
 	}
 
-	vector<Node> msg_nodes;
+	//convert char-freq pairs to Node objects
+	vector<Node*> msg_nodes;
 	for (int i = 0; i < msg_chars.size(); ++i) {
 		Node temp;
 		temp.setVal(msg_chars[i]);
 		temp.freq = msg_freqs[i];
-		msg_nodes.push_back(temp);
+		msg_nodes.push_back(&temp);
 	}
+
+	for (int i = 0; i < msg_nodes.size(); ++i) {
+		char val = msg_nodes[i]->getVal();
+		cout << val << endl;
+	}
+
+
+
+/*	//build nodes into tree
+	while (msg_nodes.size() > 1) {
+		//sort nodes
+		sort(msg_nodes.begin(), msg_nodes.end(), sort_nodes_key());
+		Node temp;
+		temp.right=msg_nodes.back(); 
+		msg_nodes.pop_back();
+		temp.left=msg_nodes.back(); 
+		msg_nodes.pop_back();
+
+		temp.autoFreqCalc();
+		msg_nodes.push_back(&temp);
+	}*/
+
 
 
 	return 0;
