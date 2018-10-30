@@ -1,10 +1,12 @@
-
+#include <string>
+using namespace std;
 
 class Node {
 	public:
 		void autoFreqCalc();
+		void smartPrint(string code);
 		void setVal(char newVal);
-		int getVal();
+		char getVal();
 
 		Node* right;
 		Node* left;

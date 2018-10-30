@@ -44,34 +44,46 @@ int main(int argc, char* argv[]){
 	}
 
 	//convert char-freq pairs to Node objects
-	vector<Node*> msg_nodes;
+	vector<Node> msg_nodes;
 	for (int i = 0; i < msg_chars.size(); ++i) {
 		Node temp;
 		temp.setVal(msg_chars[i]);
 		temp.freq = msg_freqs[i];
-		msg_nodes.push_back(&temp);
+		msg_nodes.push_back(temp);
 	}
 
+	//copy msg_nodes, we need a place to store the origanals as well as mutatable copy
+	//while we're at it, convert to pointers
+	vector<Node*> tree;
 	for (int i = 0; i < msg_nodes.size(); ++i) {
-		char val = msg_nodes[i]->getVal();
-		cout << val << endl;
+		tree.push_back(&msg_nodes[i]);
+	}
+	
+
+	
+	//build nodes into tree
+	while (tree.size() > 1) {
+		//sort nodes
+		sort(tree.begin(), tree.end(), sort_nodes_key());
+
+		Node temp;
+		msg_nodes.push_back(temp);
+
+		msg_nodes.back().right = tree.back(); 
+		tree.pop_back();
+
+		msg_nodes.back().left = tree.back(); 
+		tree.pop_back();
+
+		msg_nodes.back().autoFreqCalc();
+		tree.push_back(&msg_nodes.back());
+	}
+	cout << tree.size() << endl;
+	for (int i = 0; i < tree.size(); ++i){
+		cout << tree[i] << endl;
 	}
 
-
-
-/*	//build nodes into tree
-	while (msg_nodes.size() > 1) {
-		//sort nodes
-		sort(msg_nodes.begin(), msg_nodes.end(), sort_nodes_key());
-		Node temp;
-		temp.right=msg_nodes.back(); 
-		msg_nodes.pop_back();
-		temp.left=msg_nodes.back(); 
-		msg_nodes.pop_back();
-
-		temp.autoFreqCalc();
-		msg_nodes.push_back(&temp);
-	}*/
+	tree[0]->smartPrint("0");
 
 
 
