@@ -23,20 +23,20 @@ void Node::autoFreqCalc() {
 //print code-value pair, send recusivly to children nodes
 void Node::smartPrint(string code) {
 	//if node has value
-	if (_val) {
-		cout << code << " " <<  _val << endl;
+	if (_val != 0) {
+		cout << code << " " <<  _val << " " << freq << endl;
 	}
 
 	//if node has right side child
-	if (right) {
+	if (right != NULL) {
 		string rCode = code + "1";
 		right->smartPrint(rCode);
 	}
 
 	//if node has left side child
-	if (left) {
+	if (left != NULL) {
 		string lCode = code + "0";
-		left-> smartPrint(lCode);
+		left->smartPrint(lCode);
 	}
 }
 

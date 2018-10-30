@@ -8,9 +8,9 @@ class Node {
 		void setVal(char newVal);
 		char getVal();
 
-		Node* right;
-		Node* left;
+		Node* right = NULL;
+		Node* left = NULL;
 		int freq;
 	private:
-		char _val;
+		char _val = 0;
 };

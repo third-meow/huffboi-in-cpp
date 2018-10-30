@@ -69,23 +69,17 @@ int main(int argc, char* argv[]){
 		Node temp;
 		msg_nodes.push_back(temp);
 
-		msg_nodes.back().right = tree.back(); 
+		msg_nodes.back().left = tree.back(); 
 		tree.pop_back();
 
-		msg_nodes.back().left = tree.back(); 
+		msg_nodes.back().right = tree.back(); 
 		tree.pop_back();
 
 		msg_nodes.back().autoFreqCalc();
 		tree.push_back(&msg_nodes.back());
 	}
-	cout << tree.size() << endl;
-	for (int i = 0; i < tree.size(); ++i){
-		cout << tree[i] << endl;
-	}
 
-	tree[0]->smartPrint("0");
-
-
+	tree[0]->smartPrint("");
 
 	return 0;
 }
